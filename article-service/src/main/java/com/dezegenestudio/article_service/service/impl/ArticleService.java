@@ -1,29 +1,55 @@
 package com.dezegenestudio.article_service.service.impl;
 
-import com.dezegenestudio.article_service.model.Article;
+import com.dezegenestudio.article_service.dto.SaveArticleDto;
+import com.dezegenestudio.article_service.entity.Article;
+import com.dezegenestudio.article_service.repository.IArticleRepository;
 import com.dezegenestudio.article_service.service.IArticleService;
-import com.dezegenestudio.article_service.utils.Prompts;
-import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.core.ParameterizedTypeReference;
+
+import lombok.AllArgsConstructor;
+
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+@AllArgsConstructor
 @Service
 public class ArticleService implements IArticleService {
-    private final ChatClient chatClient;
 
-    public ArticleService(ChatClient.Builder builder) {
-        this.chatClient = builder
-                .defaultSystem(Prompts.articlePrompt)
-                .build();
+    private final IArticleRepository articleRepository;
+    private final ModelMapper modelMapper;
+
+    public List<SaveArticleDto> getAllArticles() {
+        List<SaveArticleDto> savedArticles = new ArrayList<>();
+        List<Article> articles = articleRepository.findAll();
+        for (Article article : articles) {
+            SaveArticleDto articleDto = modelMapper.map(article, SaveArticleDto.class);
+            savedArticles.add(articleDto);
+        }
+        return savedArticles;
     }
 
     @Override
-    public List<Article> getRelatedArticles(String subject) {
-        return chatClient.prompt()
-                .user(u->u.text("Bana {subject}  hakkındaki en önemli 5 bilimsel makaleyi verir misin").param("subject", subject))
-                .call()
-                .entity(new ParameterizedTypeReference<>() {});
+    public SaveArticleDto addArticle(SaveArticleDto articleDto) {
+        Article article = articleRepository.findByTitleAndAuthorAndDate(articleDto.getTitle(), articleDto.getAuthor(), articleDto.getDate());
+        if (article != null) {
+            throw new RuntimeException("Article already exists");
+        }
+        article = modelMapper.map(articleDto, Article.class);
+        articleRepository.save(article);
+        return modelMapper.map(article, SaveArticleDto.class);
     }
+
+    @Override
+    public void deleteArticle(Long id) {
+        Article article = articleRepository.findById(id).orElse(null);
+        if (article != null) {
+            articleRepository.delete(article);
+        } else {
+            throw new RuntimeException("Article with id " + id + " not found");
+        }
+    }
+
+
 }
