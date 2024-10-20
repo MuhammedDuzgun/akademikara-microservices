@@ -1,9 +1,9 @@
 package com.dezegenestudio.article_service.service;
 
-import com.dezegenestudio.article_service.model.Article;
-
-import java.util.List;
+import com.dezegenestudio.article_service.dto.ArticleDto;
+import com.dezegenestudio.article_service.dto.SaveArticleDto;
 
 public interface IArticleService {
-    List<Article> getRelatedArticles(String subject);
+    SaveArticleDto addArticle(SaveArticleDto articleDto);
+    void deleteArticle(Long id);
 }
