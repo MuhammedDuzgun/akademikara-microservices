@@ -22,7 +22,7 @@ public class ArticleServiceAI implements IArticleServiceAI {
     @Override
     public List<Article> getRelatedArticles(String subject) {
         return chatClient.prompt()
-                .user(u->u.text("Bana {subject}  hakkındaki en önemli 2 bilimsel makaleyi verir misin").param("subject", subject))
+                .user(u->u.text("Bana {subject}  hakkındaki en önemli 5 bilimsel makaleyi verir misin").param("subject", subject))
                 .call()
                 .entity(new ParameterizedTypeReference<>() {});
     }
