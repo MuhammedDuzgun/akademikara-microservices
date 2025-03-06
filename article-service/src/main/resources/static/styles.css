@@ -1,0 +1,115 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 900px; /* Sayfanın geniş görünmesini sağlayacak */
+    margin: 50px auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+h1 {
+    text-align: center;
+    font-size: 24px;
+}
+
+.search-box {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+#search-input {
+    flex: 1;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+#search-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+#search-button:hover {
+    background-color: #0056b3;
+}
+
+#loading {
+    text-align: center;
+    font-size: 18px;
+    color: #007bff;
+}
+
+.hidden {
+    display: none;
+}
+
+#results {
+    margin-top: 20px;
+}
+
+.article {
+    padding: 15px;
+    background-color: #f8f8ff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.article-content {
+    max-width: 60%; /* İçerik genişliği arttırıldı */
+}
+
+.article h2 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.article p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.article-buttons {
+    display: flex;
+    gap: 10px; /* Butonlar arasında boşluk bırakıldı */
+}
+
+.google-scholar-btn, .save-favorite-btn {
+    padding: 8px 15px;
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.google-scholar-btn:hover, .save-favorite-btn:hover {
+    background-color: #357ae8;
+}
+
+.save-favorite-btn {
+    background-color: #28a745; /* Favorilere kaydet butonu için yeşil renk */
+}
+
+.save-favorite-btn:hover {
+    background-color: #218838;
+}
